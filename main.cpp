@@ -147,7 +147,7 @@ int main()
        string command;
        Game1 game;
        game.displayArray();
-       while (play)
+       while (play && (game.revealCount < 88 + 1))
        {
            system("CLS");
            game.displayArray();
@@ -165,6 +165,10 @@ int main()
            {
                game.checkNeighBourLocation(command);
            }
+       }
+       if (game.revealCount == 88)
+       {
+           cout << "You won!" << endl;
        }
    }
 
@@ -173,7 +177,7 @@ int main()
        string command;
        Game2 game;
        game.displayArray();
-       while (play)
+       while (play && (game.revealCount < 207 + 1))
        {
            system("CLS");
            game.displayArray();
@@ -192,6 +196,10 @@ int main()
                game.checkNeighBourLocation(command);
            }
        }
+       if (game.revealCount == 207)
+       {
+           cout << "You won!" << endl;
+       }
    }
 
    if (fieldSize == 3)
@@ -199,7 +207,7 @@ int main()
        string command;
        Game3 game;
        //game.displayArray();
-       while (play)
+       while (play && (game.revealCount < 376 + 1))
        {
            system("CLS");
            game.displayArray();
@@ -217,6 +225,10 @@ int main()
            {
                game.checkNeighBourLocation(command);
            }
+       }
+       if (game.revealCount == 376)
+       {
+           cout << "You won!" << endl;
        }
    }
    return 0;

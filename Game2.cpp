@@ -1,4 +1,3 @@
-//#include "globals.h"
 #include "Game2.h"
 #include <iostream>
 #include <cstdlib>
@@ -36,6 +35,7 @@ Game2::Game2()
 			output[i][j] = 'c';
 		}
 	}
+	output[0][0] = ' ';
 }
 
 void Game2::displayArray()
@@ -50,10 +50,10 @@ void Game2::displayArray()
 	}
 }
 
+
 void Game2::displayOutput()
 {
 	char arrChar[] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T' };
-	int arrInt[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 };
 
 	for (int i = 0; i < 15; i++)
 	{
@@ -71,11 +71,13 @@ void Game2::displayOutput()
 	}
 }
 
-
+//J.U.P. Jayalath
+//21_ENG_047
 int Game2::getNumberByCharacter(char c)
 {
 	char arrChar[] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T' };
 	int arrInt[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 };
+
 	int index;
 	for (int i = 0; i < 20; i++)
 	{
@@ -88,6 +90,8 @@ int Game2::getNumberByCharacter(char c)
 	return arrInt[index];
 }
 
+//J.U.P. Jayalath
+//21_ENG_047
 bool Game2::checkLocation(string command)
 {
 	char rowC = command[0];
@@ -105,6 +109,8 @@ bool Game2::checkLocation(string command)
 	}
 }
 
+//J.U.P. Jayalath
+//21_ENG_047
 void Game2::checkNeighBourLocation(string command)
 {
 	int bombCount = 0;
@@ -118,7 +124,7 @@ void Game2::checkNeighBourLocation(string command)
 	{
 		if (flagCount < 18)
 		{
-			output[row][column] = 'F';
+			output[row + 1][column + 1] = 'F';
 			flagCount++;
 		}
 		else
