@@ -16,5 +16,6 @@ public:
 	void checkNeighBourLocation(string command);
 	void displayArray();
 	void displayOutput();
+	void displayLostOutput();
 };
 

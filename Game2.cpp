@@ -1,4 +1,4 @@
-#include "globals.h"
+//#include "globals.h"
 #include "Game2.h"
 #include <iostream>
 #include <cstdlib>
@@ -29,6 +29,13 @@ Game2::Game2()
 			i++;
 		}
 	}
+	for (int i = 0; i < 16; i++)
+	{
+		for (int j = 0; j < 16; j++)
+		{
+			output[i][j] = 'c';
+		}
+	}
 }
 
 void Game2::displayArray()
@@ -45,24 +52,30 @@ void Game2::displayArray()
 
 void Game2::displayOutput()
 {
-	for (int i = 1; i < 15; i++)
+	char arrChar[] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T' };
+	int arrInt[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 };
+
+	for (int i = 0; i < 15; i++)
 	{
-		for (int j = 1; j < 15; j++)
+		output[0][i + 1] = arrChar[i];
+		output[i + 1][0] = arrChar[i];
+	}
+
+	for (int i = 0; i < 16; i++)
+	{
+		for (int j = 0; j < 16; j++)
 		{
 			cout << output[i][j] << " ";
 		}
 		cout << endl;
-	}
-	for (int i = 0; i < 15; i++)
-	{
-		output[0][i] = arrChar[i];
-		output[i][0] = arrChar[i];
 	}
 }
 
 
 int Game2::getNumberByCharacter(char c)
 {
+	char arrChar[] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T' };
+	int arrInt[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 };
 	int index;
 	for (int i = 0; i < 20; i++)
 	{
@@ -465,8 +478,24 @@ void Game2::checkNeighBourLocation(string command)
 					output[row + 1][column + 1] = char(bombCount + 48);
 				}
 			}
+		}
 		revealCount++;
 	}
+}
 
+void Game2::displayLostOutput()
+{
+	cout << "Game Over! Mines are shown using M" << endl;
+	for (int i = 0; i < 15; i++)
+	{
+		for (int j = 0; j < 15; j++)
+		{
+			if (arr[i][j] == true)
+			{
+				output[i + 1][j + 1] = 'M';
+			}
+		}
+	}
+	displayOutput();
 }
 

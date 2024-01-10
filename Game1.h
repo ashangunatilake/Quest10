@@ -14,8 +14,9 @@ public:
 	Game1();
 	int getNumberByCharacter(char c);
 	bool checkLocation(string command);
-	void checkNeighBourLocation1(string command);
+	void checkNeighBourLocation(string command);
 	void displayArray();
 	void displayOutput();
+	void displayLostOutput();
 };
 
