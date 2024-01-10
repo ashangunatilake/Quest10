@@ -1,9 +1,19 @@
 #pragma once
+#include <string>
+
+using namespace std;
+
 class Game1
 {
 private:
-	bool gameArray[10][10];
+	bool arr[10][10];
+	char output[10][10];
 public:
 	Game1();
+	int getNumberByCharacter(char c);
+	bool checkLocation(string command);
+	void checkNeighBourLocation1(string command);
+	void displayArray();
+	void displayOutput();
 };
 
