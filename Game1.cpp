@@ -1,3 +1,4 @@
+#include "globals.h"
 #include "Game1.h"
 #include <iostream>
 #include <string>
@@ -8,10 +9,11 @@ using namespace std;
 
 Game1::Game1()
 {
+	revealCount = 0;
 	int i = 0;
-	for (int i = 0; i < 10; i++)
+	for (int i = 1; i < 10; i++)
 	{
-		for (int j = 0; j < 10; j++)
+		for (int j = 1; j < 10; j++)
 		{
 			arr[i][j] = false;
 		}
@@ -50,13 +52,18 @@ void Game1::displayArray()
 
 void Game1::displayOutput()
 {
-	for (int i = 0; i < 10; i++)
+	for (int i = 1; i < 11; i++)
 	{
-		for (int j = 0; j < 10; j++)
+		for (int j = 1; j < 11; j++)
 		{
 			cout << output[i][j] << " ";
 		}
 		cout << endl;
+	}
+	for (int i = 0; i < 10; i++)
+	{
+		output[0][i] = arrChar[i];
+		output[i][0] = arrChar[i];
 	}
 }
 
@@ -64,9 +71,6 @@ void Game1::displayOutput()
 int Game1::getNumberByCharacter(char c)
 {
 	int index;
-	char arrChar[] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T' };
-	int arrInt[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 };
-
 	for (int i = 0; i < 20; i++)
 	{
 		if (c == arrChar[i])
@@ -75,7 +79,6 @@ int Game1::getNumberByCharacter(char c)
 			break;
 		}
 	}
-
 	return arrInt[index];
 }
 
@@ -98,9 +101,8 @@ bool Game1::checkLocation(string command)
 
 void Game1::checkNeighBourLocation1(string command)
 {
-	//bool arr3[3], arr5[5], arr8[8];
-
 	int bombCount = 0;
+	int flagCount = 0;
 	char rowC = command[0];
 	char columnC = command[1];
 	int row = getNumberByCharacter(rowC);
@@ -108,184 +110,370 @@ void Game1::checkNeighBourLocation1(string command)
 
 	if (command[2] == 'F')
 	{
-		output[row][column] = 'F';
-	}
-	else if (command[2] == 'R')
-	{
-		if ((row == 0) && (column == 0))
+		if (flagCount < 12)
 		{
-			bool arr3[] = { arr[row][column + 1], arr[row + 1][column + 1], arr[row + 1][column] };
-			for (int element : arr3)
-			{
-				if (element == true)
-				{
-					bombCount++;
-				}
-			}
-			if (bombCount == 0)
-			{
-				output[row][column] = '.';
-			}
-			else
-			{
-				output[row][column] = static_cast<char>(bombCount);
-			}
-			
-		}
-		else if ((command[0] == 9) && (command[1] == 0))
-		{
-			bool arr3[] = { arr[row - 1][column], arr[row][column + 1], arr[row - 1][column + 1] };
-			for (int element : arr3)
-			{
-				if (element == true)
-				{
-					bombCount++;
-				}
-			}
-			if (bombCount == 0)
-			{
-				output[row][column] = '.';
-			}
-			else
-			{
-				output[row][column] = static_cast<char>(bombCount);
-			}
-		}
-		else if ((command[0] == 0) && (command[1] == 9))
-		{
-			bool arr3[] = { arr[row][column - 1], arr[row + 1][column - 1], arr[row + 1][column] };
-			for (int element : arr3)
-			{
-				if (element == true)
-				{
-					bombCount++;
-				}
-			}
-			if (bombCount == 0)
-			{
-				output[row][column] = '.';
-			}
-			else
-			{
-				output[row][column] = static_cast<char>(bombCount);
-			}
-		}
-		else if ((command[0] == 9) && (command[1] == 9))
-		{
-			bool arr3[] = { arr[row][column - 1], arr[row - 1][column - 1], arr[row][column - 1] };
-			for (int element : arr3)
-			{
-				if (element == true)
-				{
-					bombCount++;
-				}
-			}
-			if (bombCount == 0)
-			{
-				output[row][column] = '.';
-			}
-			else
-			{
-				output[row][column] = static_cast<char>(bombCount);
-			}
-		}
-		else if (command[0] == 0)
-		{
-			bool arr5[] = { arr[row][column - 1], arr[row][column + 1], arr[row + 1][column - 1], arr[row + 1][column + 1], arr[row + 1][column] };
-			for (int element : arr5)
-			{
-				if (element == true)
-				{
-					bombCount++;
-				}
-			}
-			if (bombCount == 0)
-			{
-				output[row][column] = '.';
-			}
-			else
-			{
-				output[row][column] = static_cast<char>(bombCount);
-			}
-		}
-		else if (command[1] == 0)
-		{
-			bool arr5[] = { arr[row - 1][column], arr[row + 1][column], arr[row - 1][column + 1], arr[row + 1][column + 1], arr[row][column + 1] };
-			for (int element : arr5)
-			{
-				if (element == true)
-				{
-					bombCount++;
-				}
-			}
-			if (bombCount == 0)
-			{
-				output[row][column] = '.';
-			}
-			else
-			{
-				output[row][column] = static_cast<char>(bombCount);
-			}
-		}
-		else if (command[0] == 9)
-		{
-			bool arr5[] = { arr[row][column - 1], arr[row][column + 1], arr[row - 1][column - 1], arr[row - 1][column], arr[row - 1][column + 1] };
-			for (int element : arr5)
-			{
-				if (element == true)
-				{
-					bombCount++;
-				}
-			}
-			if (bombCount == 0)
-			{
-				output[row][column] = '.';
-			}
-			else
-			{
-				output[row][column] = static_cast<char>(bombCount);
-			}
-		}
-		else if (command[1] == 9)
-		{
-			bool arr5[] = { arr[row - 1][column], arr[row + 1][column], arr[row - 1][column - 1], arr[row][column - 1], arr[row + 1][column - 1] };
-			for (int element : arr5)
-			{
-				if (element == true)
-				{
-					bombCount++;
-				}
-			}
-			if (bombCount == 0)
-			{
-				output[row][column] = '.';
-			}
-			else
-			{
-				output[row][column] = static_cast<char>(bombCount);
-			}
+			output[row][column] = 'F';
+			flagCount++;
 		}
 		else
 		{
-			bool arr8[] = { arr[row - 1][column], arr[row + 1][column], arr[row][column - 1], arr[row][column + 1], arr[row - 1][column - 1], arr[row - 1][column + 1], arr[row + 1][column - 1], arr[row + 1][column + 1] };
-			for (int element : arr8)
+			cout << "All flags have been used!";
+		}
+	}
+	else if (command[2] == 'R')
+	{
+		if (arr[row][column] == 'F')
+		{
+			if ((row == 1) && (column == 1))
 			{
-				if (element == true)
+				bool arr3[] = { arr[row][column + 1], arr[row + 1][column + 1], arr[row + 1][column] };
+				for (int element : arr3)
 				{
-					bombCount++;
+					if (element == true)
+					{
+						bombCount++;
+					}
+				}
+				if (bombCount == 0)
+				{
+					output[row + 1][column + 1] = '.';
+				}
+				else
+				{
+					output[row + 1][column + 1] = char(bombCount + 48);;
+				}
+
+			}
+			else if ((command[0] == 10) && (command[1] == 1))
+			{
+				bool arr3[] = { arr[row - 1][column], arr[row][column + 1], arr[row - 1][column + 1] };
+				for (int element : arr3)
+				{
+					if (element == true)
+					{
+						bombCount++;
+					}
+				}
+				if (bombCount == 0)
+				{
+					output[row + 1][column + 1] = '.';
+				}
+				else
+				{
+					output[row + 1][column + 1] = char(bombCount + 48);
 				}
 			}
-			if (bombCount == 0)
+			else if ((command[0] == 1) && (command[1] == 10))
 			{
-				output[row][column] = '.';
+				bool arr3[] = { arr[row][column - 1], arr[row + 1][column - 1], arr[row + 1][column] };
+				for (int element : arr3)
+				{
+					if (element == true)
+					{
+						bombCount++;
+					}
+				}
+				if (bombCount == 0)
+				{
+					output[row + 1][column + 1] = '.';
+				}
+				else
+				{
+					output[row + 1][column + 1] = char(bombCount + 48);
+				}
+			}
+			else if ((command[0] == 10) && (command[1] == 10))
+			{
+				bool arr3[] = { arr[row][column - 1], arr[row - 1][column - 1], arr[row][column - 1] };
+				for (int element : arr3)
+				{
+					if (element == true)
+					{
+						bombCount++;
+					}
+				}
+				if (bombCount == 0)
+				{
+					output[row + 1][column + 1] = '.';
+				}
+				else
+				{
+					output[row + 1][column + 1] = char(bombCount + 48);
+				}
+			}
+			else if (command[0] == 1)
+			{
+				bool arr5[] = { arr[row][column - 1], arr[row][column + 1], arr[row + 1][column - 1], arr[row + 1][column + 1], arr[row + 1][column] };
+				for (int element : arr5)
+				{
+					if (element == true)
+					{
+						bombCount++;
+					}
+				}
+				if (bombCount == 0)
+				{
+					output[row + 1][column + 1] = '.';
+				}
+				else
+				{
+					output[row + 1][column + 1] = char(bombCount + 48);
+				}
+			}
+			else if (command[1] == 1)
+			{
+				bool arr5[] = { arr[row - 1][column], arr[row + 1][column], arr[row - 1][column + 1], arr[row + 1][column + 1], arr[row][column + 1] };
+				for (int element : arr5)
+				{
+					if (element == true)
+					{
+						bombCount++;
+					}
+				}
+				if (bombCount == 0)
+				{
+					output[row + 1][column] = '.';
+				}
+				else
+				{
+					output[row + 1][column + 1] = char(bombCount + 48);
+				}
+			}
+			else if (command[0] == 10)
+			{
+				bool arr5[] = { arr[row][column - 1], arr[row][column + 1], arr[row - 1][column - 1], arr[row - 1][column], arr[row - 1][column + 1] };
+				for (int element : arr5)
+				{
+					if (element == true)
+					{
+						bombCount++;
+					}
+				}
+				if (bombCount == 0)
+				{
+					output[row + 1][column + 1] = '.';
+				}
+				else
+				{
+					output[row + 1][column + 1] = char(bombCount + 48);
+				}
+			}
+			else if (command[1] == 10)
+			{
+				bool arr5[] = { arr[row - 1][column], arr[row + 1][column], arr[row - 1][column - 1], arr[row][column - 1], arr[row + 1][column - 1] };
+				for (int element : arr5)
+				{
+					if (element == true)
+					{
+						bombCount++;
+					}
+				}
+				if (bombCount == 0)
+				{
+					output[row + 1][column + 1] = '.';
+				}
+				else
+				{
+					output[row + 1][column + 1] = char(bombCount + 48);
+				}
 			}
 			else
 			{
-				cout << bombCount << endl;
-				output[row][column] = char(bombCount + 48);
-				cout << output[row][column] << endl;
+				bool arr8[] = { arr[row - 1][column], arr[row + 1][column], arr[row][column - 1], arr[row][column + 1], arr[row - 1][column - 1], arr[row - 1][column + 1], arr[row + 1][column - 1], arr[row + 1][column + 1] };
+				for (int element : arr8)
+				{
+					if (element == true)
+					{
+						bombCount++;
+					}
+				}
+				if (bombCount == 0)
+				{
+					output[row + 1][column + 1] = '.';
+				}
+				else
+				{
+					output[row + 1][column + 1] = char(bombCount + 48);
+				}
+			}
+			flagCount--;
+		}
+		else
+		{
+			if ((row == 1) && (column == 1))
+			{
+				bool arr3[] = { arr[row][column + 1], arr[row + 1][column + 1], arr[row + 1][column] };
+				for (int element : arr3)
+				{
+					if (element == true)
+					{
+						bombCount++;
+					}
+				}
+				if (bombCount == 0)
+				{
+					output[row + 1][column + 1] = '.';
+				}
+				else
+				{
+					output[row + 1][column + 1] = char(bombCount + 48);;
+				}
+
+			}
+			else if ((command[0] == 10) && (command[1] == 1))
+			{
+				bool arr3[] = { arr[row - 1][column], arr[row][column + 1], arr[row - 1][column + 1] };
+				for (int element : arr3)
+				{
+					if (element == true)
+					{
+						bombCount++;
+					}
+				}
+				if (bombCount == 0)
+				{
+					output[row + 1][column + 1] = '.';
+				}
+				else
+				{
+					output[row + 1][column + 1] = char(bombCount + 48);
+				}
+			}
+			else if ((command[0] == 1) && (command[1] == 10))
+			{
+				bool arr3[] = { arr[row][column - 1], arr[row + 1][column - 1], arr[row + 1][column] };
+				for (int element : arr3)
+				{
+					if (element == true)
+					{
+						bombCount++;
+					}
+				}
+				if (bombCount == 0)
+				{
+					output[row + 1][column + 1] = '.';
+				}
+				else
+				{
+					output[row + 1][column + 1] = char(bombCount + 48);
+				}
+			}
+			else if ((command[0] == 10) && (command[1] == 10))
+			{
+				bool arr3[] = { arr[row][column - 1], arr[row - 1][column - 1], arr[row][column - 1] };
+				for (int element : arr3)
+				{
+					if (element == true)
+					{
+						bombCount++;
+					}
+				}
+				if (bombCount == 0)
+				{
+					output[row + 1][column + 1] = '.';
+				}
+				else
+				{
+					output[row + 1][column + 1] = char(bombCount + 48);
+				}
+			}
+			else if (command[0] == 1)
+			{
+				bool arr5[] = { arr[row][column - 1], arr[row][column + 1], arr[row + 1][column - 1], arr[row + 1][column + 1], arr[row + 1][column] };
+				for (int element : arr5)
+				{
+					if (element == true)
+					{
+						bombCount++;
+					}
+				}
+				if (bombCount == 0)
+				{
+					output[row + 1][column + 1] = '.';
+				}
+				else
+				{
+					output[row + 1][column + 1] = char(bombCount + 48);
+				}
+			}
+			else if (command[1] == 1)
+			{
+				bool arr5[] = { arr[row - 1][column], arr[row + 1][column], arr[row - 1][column + 1], arr[row + 1][column + 1], arr[row][column + 1] };
+				for (int element : arr5)
+				{
+					if (element == true)
+					{
+						bombCount++;
+					}
+				}
+				if (bombCount == 0)
+				{
+					output[row + 1][column] = '.';
+				}
+				else
+				{
+					output[row + 1][column + 1] = char(bombCount + 48);
+				}
+			}
+			else if (command[0] == 10)
+			{
+				bool arr5[] = { arr[row][column - 1], arr[row][column + 1], arr[row - 1][column - 1], arr[row - 1][column], arr[row - 1][column + 1] };
+				for (int element : arr5)
+				{
+					if (element == true)
+					{
+						bombCount++;
+					}
+				}
+				if (bombCount == 0)
+				{
+					output[row + 1][column + 1] = '.';
+				}
+				else
+				{
+					output[row + 1][column + 1] = char(bombCount + 48);
+				}
+			}
+			else if (command[1] == 10)
+			{
+				bool arr5[] = { arr[row - 1][column], arr[row + 1][column], arr[row - 1][column - 1], arr[row][column - 1], arr[row + 1][column - 1] };
+				for (int element : arr5)
+				{
+					if (element == true)
+					{
+						bombCount++;
+					}
+				}
+				if (bombCount == 0)
+				{
+					output[row + 1][column + 1] = '.';
+				}
+				else
+				{
+					output[row + 1][column + 1] = char(bombCount + 48);
+				}
+			}
+			else
+			{
+				bool arr8[] = { arr[row - 1][column], arr[row + 1][column], arr[row][column - 1], arr[row][column + 1], arr[row - 1][column - 1], arr[row - 1][column + 1], arr[row + 1][column - 1], arr[row + 1][column + 1] };
+				for (int element : arr8)
+				{
+					if (element == true)
+					{
+						bombCount++;
+					}
+				}
+				if (bombCount == 0)
+				{
+					output[row + 1][column + 1] = '.';
+				}
+				else
+				{
+					output[row + 1][column + 1] = char(bombCount + 48);
+				}
 			}
 		}
+		revealCount++;
 	}
 
 }
