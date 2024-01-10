@@ -2,7 +2,8 @@
 #include <string>
 
 using namespace std;
-
+//B.T.A.M. GUNATILAKE
+//21_ENG_018
 class Game2
 {
 private:

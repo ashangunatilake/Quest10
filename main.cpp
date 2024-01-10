@@ -50,10 +50,10 @@ void helpUser()
 {
     //L.D.K.Liyanaarachchi 
     //21_ENG_068
-    cout << "user can enter three letters in <row letter><column letter><commannd>\n " << endl;
-    cout << "\tRow letter-- This is from A, B, and etc." << endl;
+    cout << "\nUser can enter three letters in <row letter><column letter><commannd>\n " << endl;
+    cout << "\tRow letter - This is from A, B, and etc." << endl;
     cout << "\tColumn letter - This is also from A, B, and etc." << endl;
-    cout << "\tCommand-\n\t\tF - place a flag on the location\n\t\tR - reveal the uncovered location.\n\n" << endl;
+    cout << "\tCommand-\n\t\tF - place a flag on the location\n\t\tR - reveal the uncovered location.\n" << endl;
     
 }
 
@@ -139,18 +139,17 @@ string getInput()
 
 int main()
 {
-  
+    //L.D.K.Liyanaarachchi 
+    //21_ENG_068
    fieldSize= getFieldSize();
    helpUser();
    if (fieldSize == 1)
    {
        string command;
        Game1 game;
-       game.displayArray();
        while (play && (game.revealCount < 88 + 1))
        {
            system("CLS");
-           game.displayArray();
            game.displayOutput();
            helpUser();
            command = getInput();
@@ -176,11 +175,9 @@ int main()
    {
        string command;
        Game2 game;
-       game.displayArray();
        while (play && (game.revealCount < 207 + 1))
        {
            system("CLS");
-           game.displayArray();
            game.displayOutput();
            helpUser();
            command = getInput();
@@ -206,11 +203,9 @@ int main()
    {
        string command;
        Game3 game;
-       //game.displayArray();
        while (play && (game.revealCount < 376 + 1))
        {
            system("CLS");
-           game.displayArray();
            game.displayOutput();
            helpUser();
            command = getInput();

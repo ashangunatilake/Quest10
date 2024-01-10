@@ -8,6 +8,8 @@ using namespace std;
 
 Game1::Game1()
 {
+	//B.T.A.M. GUNATILAKE
+	//21_ENG_018
 	revealCount = 0;
 	int i = 0;
 	for (int i = 0; i < 10; i++)
@@ -41,6 +43,8 @@ Game1::Game1()
 
 void Game1::displayArray()
 {
+	//B.T.A.M. GUNATILAKE
+	//21_ENG_018
 	for (int i = 0; i < 10; i++)
 	{
 		for (int j = 0; j < 10; j++)
@@ -54,6 +58,8 @@ void Game1::displayArray()
 
 void Game1::displayOutput()
 {
+	//B.T.A.M. GUNATILAKE
+	//21_ENG_018
 	char arrChar[] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T' };
 
 	for (int i = 0; i < 10; i++)
@@ -493,6 +499,8 @@ void Game1::checkNeighBourLocation(string command)
 
 void Game1::displayLostOutput()
 {
+	//B.T.A.M. GUNATILAKE
+	//21_ENG_018
 	cout << "Game Over! Mines are shown using M." << endl;
 	for (int i = 0; i < 10; i++)
 	{
